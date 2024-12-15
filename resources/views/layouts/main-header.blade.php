@@ -163,21 +163,38 @@
 											<h6 class="dropdown-title mb-1 tx-15 text-white font-weight-semibold">Notifications</h6>
 											<span class="badge badge-pill badge-warning mr-auto my-auto float-left">Mark All Read</span>
 										</div>
-										<p class="dropdown-title-text subtext mb-0 text-white op-6 pb-0 tx-12 notif-count" data-count="0"> 0 </p>
+										<p class="dropdown-title-text subtext mb-0 text-white op-6 pb-0 tx-12 notif-count" data-count="{{ App\Models\Notification::where('user_id', 1)->where('reader_status', 0)->count() }}"> {{ App\Models\Notification::where('user_id', 1)->where('reader_status', 0)->count() }} </p>
 									</div>
 									<div class="main-notification-list Notification-scroll notifications-content-dev">
-										<a class="d-flex p-3 border-bottom" href="#">
-											<div class="notifyimg bg-pink">
-												<i class="la la-file-alt text-white"></i>
-											</div>
-											<div class="mr-3">
-												<h5 class="notification-label mb-1">New files available</h5>
-												<div class="notification-subtext">10 hour ago</div>
-											</div>
-											<div class="mr-auto" >
-												<i class="las la-angle-left text-left text-muted"></i>
-											</div>
-										</a>
+                                        <div class="new_notifications">
+                                            <a class="d-flex p-3 border-bottom" href="#">
+                                                <div class="notifyimg bg-pink">
+                                                    <i class="la la-file-alt text-white"></i>
+                                                </div>
+                                                <div class="mr-3">
+                                                    <h5 class="notification-label mb-1">00</h5>
+                                                    <div class="notification-subtext">01</div>
+                                                </div>
+                                                <div class="mr-auto" >
+                                                    <i class="las la-angle-left text-left text-muted"></i>
+                                                </div>
+                                            </a>
+                                        </div>
+
+                                        @foreach (App\Models\Notification::where('user_id', 1)->where('reader_status', 0)->latest()->get() as $notification)
+                                            <a class="d-flex p-3 border-bottom" href="#">
+                                                <div class="notifyimg bg-pink">
+                                                    <i class="la la-file-alt text-white"></i>
+                                                </div>
+                                                <div class="mr-3">
+                                                    <h5 class="notification-label mb-1">{{ $notification->content }}</h5>
+                                                    <div class="notification-subtext">{{ $notification->created_at }}</div>
+                                                </div>
+                                                <div class="mr-auto" >
+                                                    <i class="las la-angle-left text-left text-muted"></i>
+                                                </div>
+                                            </a>
+                                        @endforeach
 									</div>
 									<div class="dropdown-footer">
 										<a href="">VIEW ALL</a>

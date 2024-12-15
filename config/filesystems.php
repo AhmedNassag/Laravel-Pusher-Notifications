@@ -30,6 +30,14 @@ return [
 
     'disks' => [
 
+        'attachments' => [
+            'driver' => 'local',
+            // 'root' => public_path() . '/attachments',
+            'root' => base_path('public/attachments/'),
+            'url' => env('APP_URL') . 'public',
+            'visibility' => 'public',
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),

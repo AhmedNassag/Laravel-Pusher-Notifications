@@ -41,22 +41,27 @@
     var notificationsWrapper   = $('.notifications-tag');
     var notificationsCountElem = notificationsWrapper.find('p[data-count]');
     var notificationsCount     = parseInt(notificationsCountElem.data('count'));
-    var notifications          = notificationsWrapper.find('h5.notification-label');
+    var notifications          = notificationsWrapper.find('h4.notification-label');
+    var new_notifications      = notificationsWrapper.find('.new_notifications');
+    new_notifications.hide();
 
-
-
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
 
     var pusher = new Pusher('975bbbd060db4718049c', {
       cluster: 'eu'
     });
 
-    var channel = pusher.subscribe('notification-channel');
-    channel.bind('App\\Events\\NotificationEvent', function(data) {
-        var existingNotifications = notifications.html();
-        var newNotificationHtml = '<h5 class="notification-label mb-1">' + data.name + '</h5><br>';
-        notifications.html(newNotificationHtml + existingNotifications);
+    //when private notification remove next lines which commented
+    Echo.private('notification-channel.' + 1 /*user_id*/).listen('.notification-channel', ($data) => {
+    //when public notification remove above line
+    // var channel = pusher.subscribe('notification-channel');
+    // channel.bind('App\\Events\\CreateNotificationEvent', function(data) {
+        var newNotificationHtml = `
+            <h4 class="notification-label mb-1">' + data.message + '</h4>
+            <div class="notification-subtext">' +data.created_at+ '</div>
+            <br>
+        `;
+        new_notifications.show();
+        notifications.html(newNotificationHtml);
         notificationsCount += 1;
         notificationsCountElem.attr('data-count', notificationsCount);
         notificationsWrapper.find('.notif-count').text(notificationsCount);

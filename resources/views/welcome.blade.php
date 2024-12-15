@@ -34,6 +34,58 @@
 				<!-- /breadcrumb -->
 @endsection
 @section('content')
+
+
+
+                <!-- validationNotify -->
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+                <!-- success Notify -->
+                @if (session()->has('success'))
+                <script id="successNotify">
+                    window.onload = function() {
+                        notif({
+                            msg: "تمت العملية بنجاح",
+                            type: "success"
+                        })
+                    }
+                </script>
+                @endif
+
+                <!-- error Notify -->
+                @if (session()->has('error'))
+                <script id="errorNotify">
+                    window.onload = function() {
+                        notif({
+                            msg: "لقد حدث خطأ.. برجاء المحاولة مرة أخرى!",
+                            type: "error"
+                        })
+                    }
+                </script>
+                @endif
+
+                <!-- canNotDeleted Notify -->
+                @if (session()->has('canNotDeleted'))
+                <script id="canNotDeleted">
+                    window.onload = function() {
+                        notif({
+                            msg: "لا يمكن الحذف لوجود بيانات أخرى مرتبطة بها..!",
+                            type: "error"
+                        })
+                    }
+                </script>
+                @endif
+
+
+
 				<!-- row -->
 				<div class="row row-sm">
 					<div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
@@ -129,6 +181,21 @@
 
 				<!-- row opened -->
 				<div class="row row-sm">
+
+
+
+                    <!-- start create notification -->
+                    <div class="col-md-12 col-lg-12 col-xl-7 m-3">
+                        <a class="modal-effect btn btn-primary ripple" data-effect="effect-newspaper" data-toggle="modal" href="#addCreateNotificationModal">
+                            <i class="mdi mdi-plus"></i>&nbsp;
+                            Create Notification
+                        </a>
+                        @include('addCreateNotificationModal')
+                    </div>
+                    <!-- end create notification -->
+
+
+
 					<div class="col-md-12 col-lg-12 col-xl-7">
 						<div class="card">
 							<div class="card-header bg-transparent pd-b-0 pd-t-20 bd-b-0">

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\CreateNotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,3 +16,4 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', [HomeController::class,'index']);
+Route::post('createNotification', [CreateNotificationController::class,'store'])->name('createNotification.store');
